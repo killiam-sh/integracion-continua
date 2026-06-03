@@ -1,13 +1,11 @@
-## Grupo
-
-Institucion Universitaria Politecnico Grancolombiano  
-Modulo: Enfasis Profesional I - Integracion Continua  
-Grupo: B04 - Subgrupo: 3  
-Tutor: Msc. Edwar Reyes Corredor
-
 # Integración Continua - Proyecto de Software
 
 Proyecto del módulo Énfasis Profesional I (Integración Continua) - Politécnico Grancolombiano.
+
+**Institución:** Politécnico Grancolombiano  
+**Módulo:** Énfasis Profesional I - Integración Continua  
+**Grupo:** B04 - Subgrupo: 3  
+**Tutor:** Msc. Edwar Reyes Corredor
 
 ## Descripción
 

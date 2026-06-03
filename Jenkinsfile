@@ -9,39 +9,26 @@ pipeline {
             }
         }
 
-        stage('Construir imágenes') {
+        stage('Verificar contenedores') {
             steps {
-                sh 'docker-compose build'
-            }
-        }
-
-        stage('Levantar contenedores') {
-            steps {
-                sh 'docker-compose up -d'
+                sh 'docker ps'
             }
         }
 
         stage('Verificar conexión') {
             steps {
-                sh 'sleep 15'
-                sh 'curl -f http://localhost:5000 || exit 1'
-            }
-        }
-
-        stage('Bajar contenedores') {
-            steps {
-                sh 'docker-compose down'
+                sh 'sleep 5'
+                sh 'curl -f http://flask_app:5000 || exit 1'
             }
         }
     }
 
     post {
-        failure {
-            sh 'docker-compose down'
-            echo 'Pipeline falló — contenedores detenidos'
-        }
         success {
             echo 'Pipeline ejecutado exitosamente'
+        }
+        failure {
+            echo 'Pipeline falló'
         }
     }
 }

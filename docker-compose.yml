@@ -1,24 +1,42 @@
-services:
+version: '3.8'
 
+services:
   web:
     build: ./app
     container_name: flask_app
-
     ports:
       - "5000:5000"
-
     depends_on:
       - db
+    networks:
+      - app-network
 
   db:
     image: mysql:8
     container_name: mysql_db
-
     restart: always
-
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: prueba
-
     ports:
       - "3306:3306"
+    networks:
+      - app-network
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+    networks:
+      - app-network
+
+volumes:
+  jenkins_data:
+
+networks:
+  app-network:
+    driver: bridge

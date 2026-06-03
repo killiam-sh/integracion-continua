@@ -24,7 +24,8 @@ services:
       - app-network
 
   jenkins:
-    image: jenkins/jenkins:lts
+    image: jenkins/jenkins:lts-jdk17
+    user: root
     container_name: jenkins
     ports:
       - "8080:8080"
@@ -32,7 +33,6 @@ services:
     volumes:
       - jenkins_data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
     networks:
       - app-network
 

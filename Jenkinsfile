@@ -11,13 +11,13 @@ pipeline {
 
         stage('Construir imágenes') {
             steps {
-                sh 'docker compose build'
+                sh 'docker-compose build'
             }
         }
 
         stage('Levantar contenedores') {
             steps {
-                sh 'docker compose up -d'
+                sh 'docker-compose up -d'
             }
         }
 
@@ -30,14 +30,14 @@ pipeline {
 
         stage('Bajar contenedores') {
             steps {
-                sh 'docker compose down'
+                sh 'docker-compose down'
             }
         }
     }
 
     post {
         failure {
-            sh 'docker compose down'
+            sh 'docker-compose down'
             echo 'Pipeline falló — contenedores detenidos'
         }
         success {

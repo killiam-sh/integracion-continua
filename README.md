@@ -1,89 +1,91 @@
-# Integración Continua - Proyecto de Software
+## Herramientas de Integración Continua
 
-Proyecto del módulo Énfasis Profesional I (Integración Continua) - Politécnico Grancolombiano.
+El proyecto implementa múltiples herramientas de integración continua para automatizar procesos de validación, construcción y despliegue.
 
-**Institución:** Politécnico Grancolombiano  
-**Módulo:** Énfasis Profesional I - Integración Continua  
-**Grupo:** B04 - Subgrupo: 3  
-**Tutor:** Msc. Edwar Reyes Corredor
+### Docker
 
-## Descripción
+Docker permite la contenerización de la aplicación Flask y la base de datos MySQL, garantizando portabilidad y consistencia entre diferentes entornos de ejecución.
 
-Aplicación web desarrollada con Flask y MySQL, desplegada mediante contenedores Docker y gestionada con Jenkins como herramienta de integración continua.
+### Jenkins
 
-## Requisitos
+Jenkins se utiliza para automatizar la ejecución de pipelines de integración continua.
 
-- Docker
-- Docker Compose
-- Git
+Funciones principales:
 
-## Estructura del proyecto
+* Clonación automática del repositorio.
+* Verificación de contenedores Docker.
+* Validación de conectividad entre servicios.
+* Reporte de éxito o fallo del pipeline.
 
-```
-integracion-continua/
-├── app/
-│   ├── app.py
-│   ├── requirements.txt
-│   └── Dockerfile
-├── docker-compose.yml
-├── Jenkinsfile
-└── README.md
-```
+### Travis CI
 
-## Instrucciones de uso
+Travis CI realiza validaciones automáticas sobre el código fuente cada vez que se realiza un cambio en el repositorio.
 
-### 1. Clonar el repositorio
+Funciones principales:
 
-```bash
-git clone https://github.com/killiam-sh/integracion-continua
-cd integracion-continua
+* Verificación de sintaxis Python.
+* Validación de dependencias.
+* Comprobación de la configuración Docker Compose.
+
+Archivo de configuración:
+
+```text
+.travis.yml
 ```
 
-### 2. Levantar los contenedores
+### Codeship
 
-```bash
-docker compose up -d
+Codeship complementa el proceso de integración continua ejecutando pruebas automáticas sobre la aplicación contenerizada.
+
+Funciones principales:
+
+* Construcción de imágenes Docker.
+* Verificación de servicios.
+* Ejecución de pruebas automáticas.
+
+Archivos de configuración:
+
+```text
+codeship-services.yml
+codeship-steps.yml
 ```
 
-### 3. Configurar Jenkins
+## Historial de Cambios
 
-Instalar Docker dentro del contenedor de Jenkins:
+| Fecha    | Actividad                         |
+| -------- | --------------------------------- |
+| Semana 1 | Creación del repositorio GitHub   |
+| Semana 2 | Desarrollo de la aplicación Flask |
+| Semana 2 | Configuración de MySQL            |
+| Semana 3 | Implementación de Docker          |
+| Semana 3 | Configuración de Docker Compose   |
+| Semana 4 | Integración con Jenkins           |
+| Semana 4 | Integración con Travis CI         |
+| Semana 4 | Integración con Codeship          |
 
-```bash
-docker exec -u root jenkins bash -c "apt-get update && apt-get install -y docker.io"
-docker exec -u root jenkins bash -c "curl -L https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose"
-docker restart jenkins
-```
+## Problemas Encontrados y Soluciones
 
-### 4. Acceder a Jenkins
+| Problema                               | Solución                                                         |
+| -------------------------------------- | ---------------------------------------------------------------- |
+| Error en Docker Compose                | Corrección de la estructura YAML                                 |
+| Archivo requirements.txt no encontrado | Corrección del nombre y ubicación del archivo                    |
+| Git no reconocido por PowerShell       | Instalación y configuración de Git                               |
+| Error de autenticación GitHub          | Configuración de credenciales y autenticación mediante navegador |
 
-Abrir en el navegador: http://localhost:8080
+## Responsabilidades del Equipo
 
-Obtener la contraseña inicial:
+| Integrante   | Responsabilidad                      |
+| ------------ | ------------------------------------ |
+| Integrante 1 | Configuración Docker                 |
+| Integrante 2 | Configuración Jenkins                |
+| Integrante 3 | Integración Travis CI                |
+| Integrante 4 | Integración Codeship y documentación |
 
-```bash
-docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
-```
+## Opiniones
 
-### 5. Crear el pipeline
+El uso de Docker facilitó la portabilidad de la aplicación y redujo problemas de configuración entre equipos. Jenkins permitió automatizar tareas de validación y verificación de la aplicación. Travis CI y Codeship complementaron el proceso de integración continua mediante la ejecución de pruebas automáticas y validaciones adicionales.
 
-- Seleccionar "New Item"
-- Nombre: integracion-continua
-- Tipo: Pipeline
-- Definition: Pipeline script from SCM
-- SCM: Git
-- Repository URL: https://github.com/killiam-sh/integracion-continua.git
-- Branch: main
-- Script Path: Jenkinsfile
+## Conclusiones
 
-### 6. Ejecutar el pipeline
+La integración de Docker, Jenkins, Travis CI y Codeship permitió automatizar procesos de validación y despliegue, facilitando la detección temprana de errores y garantizando un entorno consistente para todos los integrantes del equipo. La contenerización mediante Docker simplificó la distribución de la aplicación, mientras que las herramientas de integración continua mejoraron la calidad y mantenibilidad del proyecto.
 
-Dar clic en "Build Now". El pipeline verificara que los contenedores estan corriendo y que la conexion entre Flask y MySQL es exitosa.
-
-## Servicios
-
-| Servicio | Puerto | Descripcion |
-|----------|--------|-------------|
-| Flask    | 5000   | Backend de la aplicacion |
-| MySQL    | 3306   | Base de datos |
-| Jenkins  | 8080   | Gestor de integracion continua |

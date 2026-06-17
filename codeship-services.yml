@@ -1,0 +1,4 @@
+app:
+  build:
+    image: integracion-continua
+    dockerfile: app/Dockerfile
